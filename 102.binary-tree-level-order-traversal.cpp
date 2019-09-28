@@ -82,11 +82,9 @@ public:
 
             if (newLevelFlag) {
                 vector<int> v;
+                
             }
-            while (newLevelFlag)
-            {
-                /* code */
-            }
+
             
             
             v.push_back(first->val);
