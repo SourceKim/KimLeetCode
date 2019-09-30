@@ -9,6 +9,7 @@
             "command": "/usr/bin/clang++",
             "args": [
                 "-g",
+                "-std=c++17",
                 "${file}",
                 "-o",
                 "${fileDirname}/build/${fileBasenameNoExtension}"
