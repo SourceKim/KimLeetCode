@@ -36,6 +36,25 @@ class Solution {
 public:
     int numTrees(int n) {
         
+        vector<int> dp (n+1, 0); // 含义 是 「以 key 为树的节点数量，value 为有多少个组合」
+
+        // 设置初始状态：
+        dp[0] = 1; // 当 没有节点 的时候，只有一种组合方式
+        dp[1] = 1; // 当 只有一个节点 的时候，只有一种组合方式
+
+        // 设子节点可以有 2-n 个
+        for (int i=2; i<=n; i++) {
+
+            // 设 j 为左边节点的数量
+            for (int j=0; j<i; j++) {
+
+                // 状态转移，dp[i] 等于 左右节点的总和（相乘）
+                dp[i] += dp[j] * dp[i - j - 1];
+            }
+        }
+
+        return dp[n];
+
     }
 };
 
