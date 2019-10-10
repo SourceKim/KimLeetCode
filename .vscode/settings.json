@@ -74,6 +74,9 @@
         "hash_map": "cpp",
         "map": "cpp",
         "__tree": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "codecvt": "cpp",
+        "iomanip": "cpp",
+        "list": "cpp"
     }
 }
