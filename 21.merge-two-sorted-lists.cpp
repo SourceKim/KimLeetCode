@@ -47,20 +47,23 @@ class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         
-        ListNode *p = l1->val > l2->val ? l1 : l2;
+        ListNode *n = new ListNode(100);
+        ListNode *p = n;
 
         while (l1 || l2)
         {
+            // cout << l1->val << " == " << l2->val << endl;
+
             if (l1 && l2) {
 
                 if (l1->val < l2->val) {
 
-                    p->next = l1;
+                    p->next = new ListNode(l1->val);
                     l1 = l1->next;
 
                 } else {
-
-                    p->next = l2;
+                    // cout << l2->next->val << endl;
+                    p->next = new ListNode(l2->val);
                     l2 = l2->next;
                 }
 
@@ -68,12 +71,12 @@ public:
 
                 if (l1) {
 
-                    p->next = l1;
+                    p->next = new ListNode(l1->val);;
                     l1 = l1->next;
 
                 } else {
 
-                    p->next = l2;
+                    p->next = new ListNode(l2->val);;
                     l2 = l2->next;
 
                 }
@@ -82,9 +85,36 @@ public:
             p = p->next;
         }
 
-        return p;
+        return n->next;
         
     }
 };
 // @lc code=end
+int main(int argc, char const *argv[])
+{
+    ListNode a0 = ListNode(1);
+    ListNode a1 = ListNode(3);
+    ListNode a2 = ListNode(4);
+
+    ListNode b0 = ListNode(1);
+    ListNode b1 = ListNode(2);
+    ListNode b2 = ListNode(4);
+
+    a0.next = &a1;
+    a1.next = &a2;
+
+    b0.next = &b1;
+    b1.next = &b2;
+
+    Solution *sol = new Solution();
+    ListNode *n = sol->mergeTwoLists(&a0, &b0);
+
+    while (n) {
+        cout << n->val << endl;
+        n = n->next;
+    }
+
+    return 0;
+}
+
 
