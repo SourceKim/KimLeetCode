@@ -63,17 +63,59 @@ public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         
         vector<vector<int>> res;
+        vector<int> path;
 
-        candidates.sort();
+        sort(candidates.begin(), candidates.end());
 
-        for (int i=0; i<candidates.size(); i++) {
-
-            vector<int> v;
-            
-        }
+        backtrack(0, target, candidates, res, path);
 
         return res;
     }
+
+private:
+    void backtrack(int k, int rest, vector<int> candidates, vector<vector<int>>& res, vector<int> path) {
+        
+        // cout << rest << endl;
+        if (rest <= 0) {
+            if (rest == 0) {
+                res.push_back(path);
+            }
+            return;
+        }
+
+        for (int i=k; i<candidates.size(); i++) {
+
+            int num = candidates[i];
+            // cout << "num=" << num << endl;
+            int r = rest - num;
+            // cout << "r=" << r << endl;
+            if (r >= 0) {
+                path.push_back(num);
+                backtrack(i, r, candidates, res, path);
+                path.pop_back();
+            } else {
+                break;
+            }
+
+        }
+    }
 };
 // @lc code=end
+int main(int argc, char const *argv[])
+{
+    vector<int> nums = { 2, 3, 6, 7, };
+    int target = 7;
+
+    Solution *sol = new Solution();
+    vector<vector<int>> res = sol->combinationSum(nums, target);
+
+    for (int i=0;i<res.size(); i++) {
+        vector<int> v = res[i];
+        for (int j=0; j<v.size(); j++) {
+            cout << v[j];
+        }
+        cout << endl;
+    }
+    return 0;
+}
 
