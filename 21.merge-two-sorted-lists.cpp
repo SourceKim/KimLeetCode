@@ -47,45 +47,40 @@ class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         
-        ListNode *n = new ListNode(100);
-        ListNode *p = n;
-
-        while (l1 || l2)
-        {
-            // cout << l1->val << " == " << l2->val << endl;
-
-            if (l1 && l2) {
-
-                if (l1->val < l2->val) {
-
-                    p->next = new ListNode(l1->val);
-                    l1 = l1->next;
-
-                } else {
-                    // cout << l2->next->val << endl;
-                    p->next = new ListNode(l2->val);
-                    l2 = l2->next;
-                }
-
-            } else {
-
-                if (l1) {
-
-                    p->next = new ListNode(l1->val);;
-                    l1 = l1->next;
-
-                } else {
-
-                    p->next = new ListNode(l2->val);;
-                    l2 = l2->next;
-
-                }
-            }
-
-            p = p->next;
+        if (l1 == NULL) {
+            return l2;
+        }
+        if (l2 == NULL) {
+            return l1;
         }
 
-        return n->next;
+        ListNode *n = new ListNode(-1);
+        ListNode *ptr = n;
+
+       while (l1 != NULL && l2 != NULL)
+       {
+           // 选一个小的值的料表，做步增 & 连接到新的链表上面
+           if (l1->val < l2->val) { 
+                n->next = l1;
+                l1 = l1->next;
+                n = n->next;
+           } else {
+                n->next = l2;
+                l2 = l2->next;
+                n = n->next;
+           }
+       }
+       
+       // 假设有一方排序完了 （即另一方没有排序完毕，直接接到后面即可
+       if (l1 != NULL) {
+           n->next = l1;
+       }
+
+       if (l2 != NULL) {
+           n->next = l2;
+       }
+
+       return ptr->next;
         
     }
 };
