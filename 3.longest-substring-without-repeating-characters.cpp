@@ -50,92 +50,66 @@
  * 
  */
 
-// #include <stdio.h>
-// #include <iostream>
-// #include <map>
-// using namespace std;
+#include <stdio.h>
+#include <iostream>
+#include <stack>
+#include <vector>
+#include <string.h>
 
+using namespace std;
+
+// @lc code=start
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
 
-        int sSize = s.size();
-        if (sSize == 0) {
-            return 0;
+        /* 
+        pos 的作用是：记录字符最后出现的位置
+        key - 字符 
+        value - 最后出现的位置 (-1 为从未出现)
+         */
+        vector<int> pos(256, -1);
+
+        int left = -1; // 左边指针
+
+        int maxLength = 0; // 最长长度
+
+        for (int right = 0; right < s.length(); right++) { // 遍历每个字符
+
+            /* 
+                当前字符出现过 - 更新 left 到当前字符
+                当前字符没出现过 - 不更新 left 的位置 （left 最小为 0， pos 初始化全是 -1
+             */
+            left = max(left, pos[s[right]]); 
+
+            /* 
+                记录当前字符出现的 pos
+             */
+            pos[s[right]] = right;
+
+            /* 
+                更新最大长度
+             */
+            maxLength = max(maxLength, right - left);
+
         }
 
-        map<char, int> m;
-        int maxLength = 0;
-
-        int lastInMapPosition = 0; // 最后一个已经在数组出现的位置
-
-        for (int i=0; i<sSize; i++) {
-            char c = s[i];
-            map<char, int>::iterator iter;
-            iter = m.find(c);
-
-            if (iter != m.end()) {
-                
-                // 找到了，就 做对比
-
-                int inMapPosition = iter->second;
-
-                if (inMapPosition - 1 >= lastInMapPosition) {
-                    lastInMapPosition = inMapPosition;
-                }
-                // int length = i - inMapPosition;
-                // if (length > maxLength) {
-                //     maxLength = length;
-                // }
-                // lastInMapPosition = i;
-                // if (firstInMapPosition == -1) {
-                //     firstInMapPosition = inMapPosition + 1;
-                // }
-            } 
-            // 更新位置
-            m[c] = i + 1;
-
-            if (i - lastInMapPosition + 1 > maxLength) {
-                maxLength = i - lastInMapPosition + 1;
-            }
-        }
-
-        // cout << maxLength << endl;
-        // cout << firstInMapPosition << endl;
-        // cout << lastInMapPosition << endl;
-
-        // if (firstInMapPosition > maxLength) {
-        //     maxLength = firstInMapPosition;
-        // }
-
-        // 看下到最后有没有更长的
-        // int length = sSize - lastInMapPosition;
-        // if (length > maxLength) {
-        //     maxLength = length;
-        // }
-        // for(iter = m.begin() ; iter != m.end() ; iter++ )
-        // {
-        //     int length = sSize - iter->second;
-        //     if (length > maxLength) {
-        //         maxLength = length;
-        //     }
-        // }
-        
         return maxLength;
     }
 };
+// @lc code=end
 
-// int main(int argc, char const *argv[])
-// {
-//     Solution *sol = new Solution();
+int main(int argc, char const *argv[])
+{
+    Solution *sol = new Solution();
 
-//     string s = "au";
+    string s = "abcabcbb";
 
-//     int length = sol->lengthOfLongestSubstring(s);
+    int length = sol->lengthOfLongestSubstring(s);
 
-//     cout << length << endl;
+    cout << length << endl;
     
-//     return 0;
-// }
+    return 0;
+}
 
 

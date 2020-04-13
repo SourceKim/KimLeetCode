@@ -42,22 +42,89 @@ struct ListNode {
     int val;
     ListNode *next;
     ListNode(int x) : val(x), next(NULL) {}
+
+    void print(string name) {
+        cout << name << ": ";
+        ListNode *ptr = this;
+        while (ptr)
+        {
+            cout << " " << ptr->val;
+            ptr = ptr->next;
+        }
+        cout << endl;
+    }
 };
 
-// @lc code=start
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
+/* 
+    1. 通过 slow-fast 找到中点
+    2. 断开链表 l1 l2
+    3. 翻转 l2
+    4. 间隔插入 l2 到 l1
  */
+
+// @lc code=start
+
 class Solution {
 public:
     void reorderList(ListNode* head) {
+
+        if (!head) return;
+
+        // 1
+        ListNode *slow = head, *fast = head;
+        while (fast->next && fast->next->next)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        // 2
+        fast = slow->next;
+        slow->next = NULL;
+
+        // fast->print("fast");
+        // head->print("head");
+        // 3
+        ListNode *last = NULL;
+        while (fast)
+        {
+            ListNode *tmp = fast->next;
+            fast->next = last;
+            last = fast;
+            fast = tmp;
+        }
+
+        // last->print("fast");
         
+        // 4
+        while (head && last)
+        {
+            ListNode *tmp = head->next;
+            head->next = last;
+            last = last->next;
+            head->next->next = tmp;
+            head = tmp;
+        }
+
     }
 };
 // @lc code=end
 
+int main(int argc, char const *argv[])
+{
+    ListNode n0 = ListNode(1);
+    ListNode n1 = ListNode(2);
+    ListNode n2 = ListNode(3);
+    ListNode n3 = ListNode(4);
+    ListNode n4 = ListNode(5);
+
+    n0.next = &n1;
+    n1.next = &n2;
+    n2.next = &n3;
+    n3.next = &n4;
+
+    Solution *sol = new Solution();
+    sol->reorderList(&n0);
+    n0.print("res");
+    return 0;
+}
