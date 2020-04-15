@@ -62,31 +62,24 @@ public:
         }
 
         string first = strs[0];
-
-        if (first.empty()) {
-            return str;
-        }
-
-        if (first.size() == 1 && strs.size() == 1) {
-            return first;
-        }
-
         int pos = 0;
 
-        while (true)
+        while (pos <= strs.size())
         {
             
             char base = first[pos];
             for (int i = 1; i < strs.size(); i++) {
-                if (pos > strs[i].size() || strs[i][pos] != base) {
+                if (pos >= strs[i].size() || strs[i][pos] != base) {
                     return str;
                 }
             }
 
-            str += base;
+            str.push_back(base);
 
             pos++;
         }
+
+        return str;
 
     }
 };
@@ -94,7 +87,7 @@ public:
 
 int main(int argc, char const *argv[])
 {
-    vector<string> input {"dog","racecar","car"};
+    vector<string> input {""};
     Solution *sol = new Solution();
     string res = sol->longestCommonPrefix(input);
     cout << res << endl;
