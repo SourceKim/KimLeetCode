@@ -34,13 +34,29 @@
  * 
  * 
  */
-// #include <stdio.h>
-// #include <iostream>
-// #include <stack>
-// #include <vector>
+#include <stdio.h>
+#include <iostream>
+#include <stack>
+#include <vector>
 
-// using namespace std;
+using namespace std;
+// @lc code=start
+/* 
+    1. 先对数组进行排序
 
+    2. 遍历每一个数 i
+
+    3. 设定 j = i + 1 指向 i 的下一个
+       设定 k = nums.size() 指向最后
+       设定 target = 0 - nums[i] 为我们要找到的 i & k 之和
+
+    4. while （j < k） 直到指针相遇
+
+    5. while 中判断：
+        a 如果 j & k 的数字 == target 则继续寻找其他组合，所以 j++ k-- （此时要注意处理重复）
+        b 如果 还小于 target，则增大，所以是 j++
+        c 如果 已经大于 target，则因减小，所以是 k--
+ */
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
@@ -107,7 +123,7 @@ public:
         return v;
     }
 };
-
+// @lc code=end
 // int main(int argc, char const *argv[])
 // {
 

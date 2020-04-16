@@ -30,19 +30,70 @@
  * 
  */
 
+#include <vector>
+#include <stdio.h>
+#include <iostream>
+#include <stack>
+#include <queue>
+using namespace std;
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+
+    void print(string name) {
+        cout << name << ": ";
+        ListNode *ptr = this;
+        while (ptr)
+        {
+            cout << " " << ptr->val;
+            ptr = ptr->next;
+        }
+        cout << endl;
+    }
+};
+
 // @lc code=start
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         
+        // 1. 要返回的链表 & dummy
+        ListNode *list = new ListNode(-1);
+        ListNode *dummy = list;
+
+        int carry = 0;
+        int val1, val2, sum;
+        while (l1 || l2) // l1 & l2 都遍历完
+        {
+            val1 = l1 ? l1->val : 0;
+            val2 = l2 ? l2->val : 0;
+
+            sum = val1 + val2 + carry;
+            
+            ListNode *tmp = new ListNode(sum % 10);
+            list->next = tmp;
+
+            carry = sum / 10;
+
+            list = list->next;
+
+            if (l1) {
+                l1 = l1->next;
+            }
+            if (l2) {
+                l2 = l2->next;
+            }
+            
+        }
+
+        if (carry == 1) {
+            list->next = new ListNode(1);
+        }
+
+        return dummy->next;
+        
+
     }
 };
 // @lc code=end

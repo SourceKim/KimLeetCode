@@ -66,6 +66,13 @@ struct TreeNode {
 };
 
 // @lc code=start
+/* 
+    因为是 BST，所以 p & q 的公共祖先肯定在两侧
+
+    即 min < root < max
+
+    如果 root < min，则找右边 否则找左边
+ */
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {

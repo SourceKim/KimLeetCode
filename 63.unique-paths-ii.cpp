@@ -48,12 +48,60 @@
  * 
  */
 
+#include <vector>
+#include <stdio.h>
+#include <iostream>
+#include <stack>
+#include <vector>
+using namespace std;
+
 // @lc code=start
 class Solution {
 public:
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+
+        if (obstacleGrid.empty()) return 0;
+
+        // 设起点为 0 0
+        int rowCnt = obstacleGrid.size();
+        int colCnt = obstacleGrid[0].size();
+
+        vector<vector<long>> dp (rowCnt, vector<long> (colCnt, 0));
+
+        for (int x = 0; x < rowCnt; x++) {
+            for (int y = 0; y < colCnt; y++) {
+                
+                // 1. 处理障碍物
+                if (obstacleGrid[x][y] == 1) continue;
+
+                // 2. 处理边界
+                if (x == 0 && y == 0) dp[0][0] = 1;
+                else if (x == 0) dp[x][y] = dp[0][y - 1];
+                else if (y == 0) dp[x][y] = dp[x - 1][0];
+
+                // 3. 处理正常情况
+                else dp[x][y] = dp[x][y - 1] + dp[x - 1][y];
+
+                // cout << dp[x][y] << endl;
+            }
+        }
         
+        return dp[rowCnt - 1][colCnt - 1];
     }
 };
 // @lc code=end
+
+int main(int argc, char const *argv[])
+{
+    vector<vector<int>> obstacleGrid {
+        vector<int>{0, 0},
+        // vector<int>{0, 1, 0},
+        // vector<int>{0, 0, 0}
+    };
+   Solution *sol = new Solution();
+   int res = sol->uniquePathsWithObstacles(obstacleGrid);
+   cout << res << endl;
+    return 0;
+}
+
 

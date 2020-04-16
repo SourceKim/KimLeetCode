@@ -48,6 +48,15 @@
 #include <queue>
 using namespace std;
 // @lc code=start
+
+/* 
+    定义头尾指针 head tail
+
+    用 i 遍历数组
+
+    如果 i == 0，让 i 位置和 head 交换一下，然后 head++
+    如果 i == 2，让 i 位置和 tail 交换一下，然后 tail++
+ */
 class Solution {
 public:
     void sortColors(vector<int>& nums) {

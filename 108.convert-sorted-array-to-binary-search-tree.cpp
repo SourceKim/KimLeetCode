@@ -49,43 +49,50 @@ struct TreeNode {
       TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 // @lc code=start
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
+/* 
+二分法，因为 mid 就是中序遍历的 root，而题目的数组就是有序数组
  */
 class Solution {
 public:
     TreeNode* sortedArrayToBST(vector<int>& nums) {
-        
+
+        if (nums.empty()) return NULL;
+
         int mid = nums.size() / 2;
-        if (nums.size() == 0) {
-            return NULL;
-        }
-        // cout << mid << endl;
+
+        vector<int> left (nums.begin(), nums.begin() + mid);
+        vector<int> right (nums.begin() + mid + 1, nums.end());
+
         TreeNode *root = new TreeNode(nums[mid]);
-
-        int leftIdx = mid - 1;
-        if (leftIdx < 0) {
-            root->left = NULL;
-        } else {
-            vector<int> left (nums.begin(), nums.begin() + leftIdx + 1);
-            root->left = sortedArrayToBST(left);
-        }
-
-        int rightIdx = mid + 1;
-        if (rightIdx >= nums.size()) {
-            root->right = NULL;
-        } else {
-            vector<int> right (nums.begin() + rightIdx, nums.end());
-            root->right = sortedArrayToBST(right);   
-        }
+        root->left = sortedArrayToBST(left);
+        root->right = sortedArrayToBST(right);
 
         return root;
+        
+        // int mid = nums.size() / 2;
+        // if (nums.size() == 0) {
+        //     return NULL;
+        // }
+        // // cout << mid << endl;
+        // TreeNode *root = new TreeNode(nums[mid]);
+
+        // int leftIdx = mid - 1;
+        // if (leftIdx < 0) {
+        //     root->left = NULL;
+        // } else {
+        //     vector<int> left (nums.begin(), nums.begin() + leftIdx + 1);
+        //     root->left = sortedArrayToBST(left);
+        // }
+
+        // int rightIdx = mid + 1;
+        // if (rightIdx >= nums.size()) {
+        //     root->right = NULL;
+        // } else {
+        //     vector<int> right (nums.begin() + rightIdx, nums.end());
+        //     root->right = sortedArrayToBST(right);   
+        // }
+
+        // return root;
 
     }
 };
