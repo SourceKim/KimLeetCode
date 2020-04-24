@@ -61,44 +61,42 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        
-        vector<vector<int>> res;
-        vector<int> path;
 
         sort(candidates.begin(), candidates.end());
 
-        backtrack(0, target, candidates, res, path);
+        vector<int> tmp;
+        backtracking(candidates, target, 0, tmp);
 
         return res;
     }
 
 private:
-    void backtrack(int k, int rest, vector<int> candidates, vector<vector<int>>& res, vector<int> path) {
-        
-        // cout << rest << endl;
-        if (rest <= 0) {
-            if (rest == 0) {
-                res.push_back(path);
-            }
+
+    vector<vector<int>> res;
+
+    // nums 解空间
+    // target 本次搜索的目标值
+    // idx 本次搜索在解空间的位置
+    // tmp 本次搜索的值
+    void backtracking(vector<int> &nums, int target, int idx, vector<int> &tmp) {
+
+        // 递归出口，target <= 0
+        if (target < 0) return;
+        if (target == 0) {
+            res.push_back(tmp);
             return;
         }
 
-        for (int i=k; i<candidates.size(); i++) {
-
-            int num = candidates[i];
-            // cout << "num=" << num << endl;
-            int r = rest - num;
-            // cout << "r=" << r << endl;
-            if (r >= 0) {
-                path.push_back(num);
-                backtrack(i, r, candidates, res, path);
-                path.pop_back();
-            } else {
-                break;
-            }
-
+        // 遍历后面的
+        for (int i = idx; i < nums.size(); i++) {
+            tmp.push_back(nums[i]);
+            backtracking(nums, target - nums[i], i, tmp);
+            tmp.pop_back();
         }
+
+
     }
+   
 };
 // @lc code=end
 int main(int argc, char const *argv[])

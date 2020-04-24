@@ -86,8 +86,11 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <string>
 
 using namespace std;
+
+// @lc code=start
 class Solution {
 public:
     bool isMatch(string s, string p) {
@@ -129,6 +132,7 @@ public:
         return true;
     }
 };
+// @lc code=end
 
 int main(int argc, char const *argv[])
 {

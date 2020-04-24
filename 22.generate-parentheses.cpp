@@ -52,6 +52,10 @@ public:
     }
 
 private:
+/* 
+    leftCount， 左边还能加多少个
+    rightCount， 右边还能加多少个
+ */
     void backtrack(int leftCount, int rightCount, string str, vector<string>& res) {
 
         if (leftCount == 0 && rightCount == 0) {
@@ -59,6 +63,7 @@ private:
             return;
         }
 
+        // 左边的必须要多于右边的
         if (leftCount > rightCount) {
             return;
         }
@@ -80,7 +85,7 @@ private:
 int main(int argc, char const *argv[])
 {
     Solution *sol = new Solution();
-    vector<string> res = sol->generateParenthesis(2);
+    vector<string> res = sol->generateParenthesis(3);
 
     for (int i=0; i<res.size(); i++) {
         cout << res[i] << endl;

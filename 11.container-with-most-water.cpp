@@ -39,45 +39,49 @@
  * 
  */
 
-// #include <vector>
-// #include <stdio.h>
-// #include <iostream>
-// using namespace std;
+#include <vector>
+#include <stdio.h>
+#include <iostream>
+using namespace std;
 
+// @lc code=start
+/* 
+    定义两个指针 i j 分别指向两边
+
+    最大容水量 = min(h[i], h[j]) * (j - i)
+
+    每次移动小的那头，直到相遇即可
+ */
 class Solution {
 public:
     int maxArea(vector<int>& height) {
         
         int maxContainer = 0;
 
-        for (int i=0; i<height.size() - 1; i++) {
+        int i = 0, j = height.size() - 1;
 
-            for (int j=i + 1; j<height.size(); j++) {
+        while (i < j)
+        {
+            maxContainer = max(min(height[i], height[j]) * (j - i), maxContainer);
 
-                int h0 = height[i];
-                int h1 = height[j];
-                int minH = h0 > h1 ? h1 : h0;
-                int currentContain = (j - i) * minH;
-                
-                if (currentContain > maxContainer) {
-                    maxContainer = currentContain;
-                }
-            }
+            height[i] < height[j] ? i++ : j--;
         }
+        
 
         return maxContainer;
     }
 };
+// @lc code=end
 
-// int main(int argc, char const *argv[])
-// {
-//     int l[] = {1,8,6,2,5,4,8,3,7};
-//     vector<int> v (l, l+9);
-//     Solution *sol = new Solution();
-//     int res = sol->maxArea(v);
-//     cout << res << endl;
-//     return 0;
-//     return 0;
-// }
+int main(int argc, char const *argv[])
+{
+    int l[] = {1,8,6,2,5,4,8,3,7};
+    vector<int> v (l, l+9);
+    Solution *sol = new Solution();
+    int res = sol->maxArea(v);
+    cout << res << endl;
+    return 0;
+    return 0;
+}
 
 

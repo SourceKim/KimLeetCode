@@ -51,50 +51,48 @@ class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
 
-        /*
-        1. 生成一个空 Node，接到链表头
-        2. 声明 3 个指针： p0 / p1 / p2， p0 指向上一步的空 Node， p1 指向第一个，p2 指向第二个
-        3. p1 & p2 交换 (p0 指向 交换后 的 p2，p2 指向 p1，p1 指向 p2->next)
-        4. p0 & p1 & p2 一起 +2
-        5. 重复 3、4，直到 p1 的 next 是 NULL
-        */
-
        if (head == NULL || head->next == NULL) {
            return head;
        }
 
        // 1.
-       ListNode *fakeHead = new ListNode(100);
-       fakeHead->next = head;
+       ListNode *dummy = new ListNode(-1);
+       dummy->next = head;
 
-       // 2.
-       ListNode *p0 = fakeHead;
-       ListNode *p1 = fakeHead->next;
-       ListNode *p2 = fakeHead->next->next;
+       // 2. pre 指向要交换开始的前一个，tmp 指向要交换的
+       ListNode *pre = dummy, *tmp;
 
        // 3.
-       bool p2NextIsNull = false;
-       while (p2)
+       while (pre->next && pre->next->next)
        {
-        //    cout << "==" << p0->val << p1->val << p2->val << "==" << endl;
-           ListNode *tmpP2Next = p2->next;
+           /* 
+                初始： 
+                    pre 指向 dummy
 
-           p2->next = p1;
-           p1->next = tmpP2Next;
-           p0->next = p2;
+                最终目的：
+                    让 1 指向 3
+                    让 2 指向 1
 
-//    cout << "++" << p0->next->val << p1->next->val << p2->next->val << "++" << endl;
-            if (tmpP2Next == NULL) {
-                return fakeHead->next;
-            }
-           p0 = p2->next;
-           p1 = p0->next;
-           p2 = p1->next;
-        //    cout << "++" << p0->val << p1->val << p2->val << "++" << endl;
-        //    i++;
+                    
+            */
+            tmp = pre->next; // tmp 指向 1
+            pre->next = pre->next->next;    // pre 下一个指向 2
+            tmp->next = tmp->next->next;    // tmp （1）指向 3
+            pre->next->next = tmp;          // pre 的下一个（2）指向 1
+
+            /* 
+                至此 已经完成了 swap
+
+                2 的 下一个(next) 是 1
+                1 的 下一个(next) 是 3
+
+            */ 
+
+            // 让 pre 到 tmp（1）的位置，继续
+            pre = tmp;
        }
        
-       return fakeHead->next;
+       return dummy->next;
         
     }
 };

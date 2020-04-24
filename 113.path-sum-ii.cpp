@@ -70,6 +70,16 @@ class Solution {
 public:
     vector<vector<int>> pathSum(TreeNode* root, int sum) {
 
+        if (sum < 0) return {{}};
+
+        vector<vector<int>> res;
+
+        int target = sum - root->val;
+
+        for (vector<int> left : pathSum(root->left, target)) {
+
+            int 
+        }
     }
 
 private:

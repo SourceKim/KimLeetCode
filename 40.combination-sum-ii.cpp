@@ -62,42 +62,41 @@ class Solution {
 public:
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
 
-        set<vector<int>> res; // 用 set 去重
-        vector<int> path;
-
         sort(candidates.begin(), candidates.end());
 
-        backtrack(0, target, candidates, res, path);
+        vector<int> tmp;
+        backtracking(candidates, target, 0, tmp);
 
-        vector<vector<int>> vRes (res.begin(), res.end());
-        return vRes;
+        return res;
         
     }
 
 private:
-    void backtrack(int k, int rest, vector<int> candidates, set<vector<int>>& res, vector<int> path) {
 
-        if (rest <= 0) {
-            if (rest == 0) {
-                res.insert(path);
-            }
+    vector<vector<int>> res;
+
+    // nums 解空间
+    // target 本次搜索的目标值
+    // idx 本次搜索在解空间的位置
+    // tmp 本次搜索的值
+    void backtracking(vector<int> &nums, int target, int idx, vector<int> &tmp) {
+
+        // 递归出口，target <= 0
+        if (target < 0) return;
+        if (target == 0) {
+            res.push_back(tmp);
             return;
         }
 
-        for (int i=k; i<candidates.size(); i++) {
-
-            int num = candidates[i];
-            int r = rest - num;
-
-            if (r >= 0) {
-
-                path.push_back(num);
-                backtrack(i+1, r, candidates, res, path);
-                path.pop_back();
-            } else {
-                return;
-            }
+        // 遍历后面的
+        for (int i = idx; i < nums.size(); i++) {
+            if (i > idx && nums[i] == nums[i - 1]) continue;
+            tmp.push_back(nums[i]);
+            backtracking(nums, target - nums[i], i + 1, tmp);
+            tmp.pop_back();
         }
+
+
     }
 };
 // @lc code=end

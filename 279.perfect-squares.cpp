@@ -44,8 +44,29 @@ class Solution {
 public:
     int numSquares(int n) {
         
-        vector
+        vector<long> dp (n + 1, INT_MAX);
+        dp[0] = 0;
+
+        for (int i = 1; i <= n; i++) {
+
+            for (int j = 0; j * j <= i; j++) {
+                
+                dp[i] = min(dp[i - j * j] + 1, dp[i]);
+
+            }
+
+        }
+
+        return dp[n];
     }
 };
 // @lc code=end
+
+int main(int argc, char const *argv[])
+{
+    Solution *sol = new Solution();
+    int res = sol->numSquares(12);
+    cout << res << endl;
+    return 0;
+}
 

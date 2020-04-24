@@ -97,8 +97,8 @@ public:
         for (int i = size1 - 1; i >= 0; i--) { // 从后遍历
             for (int j = size2 - 1; j >= 0; j--) { // 从后遍历
                 int mul = (num1[i] - '0') * (num2[j] - '0'); // 获取相乘的结果
-                int p1 = i + j; // 第 n 位
-                int p2 = i + j + 1; // 与他前一位 （看上一次计算进位了没
+                int p1 = i + j; // 前一位 （存要进位的数，好下一次相加）
+                int p2 = i + j + 1; // 当前位
                 int sum = mul + vals[p2]; // 这次计算出来的总结果 （算上上次的结果）
 
                 vals[p1] += sum / 10; // 把进位保存

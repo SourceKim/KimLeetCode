@@ -33,92 +33,66 @@
  * 
  */
 
-// #include <stdio.h>
-// #include <iostream>
+#include <stdio.h>
+#include <iostream>
+#include <string>
 
-// using namespace std;
+using namespace std;
 
+// @lc code=start
 class Solution {
 public:
     string longestPalindrome(string s) {
         
-        const int len = s.length();
+        int len = s.length();
 
-        if (len < 2) {
-            return s;
+        if (len < 2) return s;
+
+        int start = 0, maxLen = 0; // 分别存储 开头 & 最长长度
+
+        int idx = 0; // 指向 string 的每一个 char
+
+        while (len - idx > maxLen / 2)
+        { // 出口：当 剩余长度 小于 最大长度的一半
+
+            int left = idx, right = idx; // 定义 左右 指针，初始指向当前的 idx
+
+            // 处理重复的 字符 【跳过该字符】，这样才能回文
+            while (right < len - 1 && s[right + 1] == s[right])
+            {
+                right++;
+            }
+
+            // idx 指向 right 的下一个
+            idx = right + 1;
+
+            // 开始扩散 （下一位相同才向两边扩散）
+            while (right < len - 1 && left > 0 && s[right + 1] == s[left - 1]) {
+                right++;
+                left--;
+            }
+
+            // 更新 maxLength 和 left
+            if (maxLen < right - left + 1) {
+                maxLen = right - left + 1;
+                start = left;
+            }
         }
-
-        // 使用动态规划
         
-        bool dp[len][len];
-        memset(dp, false, len * len * sizeof(bool));
-
-        // for (int i=0; i<len; i++) {
-
-        //     for (int j=0; j<len; j++) {
-        //         cout << dp[i][j] << endl;
-        //     }
-        // }
-
-        int start = 0; // 最长回文起点
-        int maxLen = 1; // 最长回文长度
-
-        // 1. 先找出 1 个相同 & 2 个相同的回文串 "a" "aa"
-        for (int i=0; i<len; i++) {
-
-            // 1 个
-            dp[i][i] = true;
-
-            // 2 个
-            if (i < len - 1) {
-                bool isSame = s[i] == s[i+1];
-                dp[i][i+1] = isSame;
-
-                if (isSame) {
-                    // 保存状态
-                    start = i;
-                    maxLen = 2;
-                }
-
-            }
-            
-        }
-
-        // 2. 递推 3 个以及以上的回文串
-        for (int subLen = 3; subLen <= len; subLen++) { // 回文串的长度 subLen
-
-            for (int left = 0; left + subLen - 1 < len; left++) { // 回文串左边（起始
-
-                int right = left + subLen - 1; // 回文串右边
-
-                // 状态转移
-                if (s[left] == s[right] && dp[left + 1][right -1]) {
-
-                    dp[left][right] = true;
-
-                    // 保存下标
-                    start = left;
-                    maxLen = subLen;
-
-                }
-            }
-        }
-
-        // cout << start << endl;
-        // cout << maxLen << endl;
 
         return s.substr(start, maxLen);
         
     }
 };
+// @lc code=end
 
-// int main(int argc, char const *argv[])
-// {
-//     string s = "abcda";
-//     Solution *sol = new Solution();
-//     string str = sol->longestPalindrome(s);
-//     cout << str << endl;
-//     return 0;
-// }
+int main(int argc, char const *argv[])
+{
+    string s = "bananas";
+    Solution *sol = new Solution();
+    string str = sol->longestPalindrome(s);
+    cout << str << endl;
+    return 0;
+}
 
 

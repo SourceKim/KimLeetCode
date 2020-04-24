@@ -41,73 +41,24 @@ class Solution {
 public:
     string addBinary(string a, string b) {
 
-        string::reverse_iterator iter0 = a.rbegin();
-        string::reverse_iterator iter1 = b.rbegin();
+        string res = "";
 
-        string res = string();
+        int i = a.size() - 1, j = b.size() - 1;
+        int carry = 0, sum = 0;
+        while (i >= 0 || j >= 0) {
 
-        bool needCarry = false;
-        while (iter0 != a.rend() || iter1 != b.rend())
-        {
-            char c;
-            bool nextNeedCarry = false;
+            int c0 = i >= 0 ? a[i--] - '0' : 0;
+            int c1 = j >= 0 ? b[j--] - '0' : 0;
 
-            if (iter0 == a.rend()){
-                
-                c = *iter1;
-                iter1++;
-
-            } else if (iter1 == b.rend()) {
-
-                c = *iter0;
-                iter0++;
-
-            } else {
-
-                if (*iter0 == *iter1) {
-
-                    cout << "a" << endl;
-
-                    if (*iter1 == '0') {
-
-                        c = '0';
-
-                    } else {
-
-                        c = '0';
-                        nextNeedCarry = true;
-
-                    }
-
-                } else {
-                    cout << "d" << endl;
-                    c = '1';
-                }
-
-                iter0++;
-                iter1++;
-
-            }
-
-            if (needCarry) {
-
-                if (c == '1') {
-                    c = '0';
-                    nextNeedCarry = true;
-                } else {
-                    c = '1';
-                }
-            }
-            cout << c << endl;
-            needCarry = nextNeedCarry;
-            res.insert(res.begin(), c);            
+            sum = c0 + c1 + carry;
+            
+            carry = sum <= 1 ? 0 : 1;
+            res = (sum == 0 || sum == 2 ? '0' : '1') + res;
         }
 
-        if (needCarry) {
-            res.insert(res.begin(), '1');
-        }
+        if (carry == 1) res = '1' + res;
         
-        return res;
+        return res.empty() ? "0" : res;
     }
 };
 // @lc code=end
@@ -115,7 +66,7 @@ public:
 int main(int argc, char const *argv[])
 {
     Solution *sol = new Solution();
-    string res = sol->addBinary("1010", "1011");
+    string res = sol->addBinary("11", "1");
     cout << res << endl;
     return 0;
 }

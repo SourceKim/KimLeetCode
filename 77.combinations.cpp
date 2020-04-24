@@ -40,30 +40,33 @@
 using namespace std;
 // @lc code=start
 class Solution {
+    /* 
+        从 1 ~ n 中找出取 k 个数字组合
+     */
 public:
     vector<vector<int>> combine(int n, int k) {
 
-        vector<vector<int>> res;
-        vector<int> path;
-        backtrack(n, k, 1, res, path);
+        vector<int> tmp;
+        backtrack(1, k, n, tmp);
         return res;
         
     }
 private:
-    // k - 当前层级
-    // n - 总共层数
-    void backtrack(int n, int k, int level, vector<vector<int>>& res, vector<int>& path) {
+    vector<vector<int>> res;
 
-        if (path.size() == k) {
-            res.push_back(path);
+    void backtrack(int cur, int k, int n, vector<int> &tmp) {
+
+        if (tmp.size() == k) {
+            res.push_back(tmp);
             return;
         }
 
-        for (int i=level; i<=n; i++) {
-            path.push_back(i);
-            backtrack(n, k, i+1, res, path);
-            path.pop_back();
+        for (int i = cur; i <= n; i++) {
+            tmp.push_back(i);
+            backtrack(i + 1, k, n, tmp);
+            tmp.pop_back();
         }
+
     }
 };
 // @lc code=end

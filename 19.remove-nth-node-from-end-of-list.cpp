@@ -46,48 +46,31 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 // @lc code=start
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
+
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
+
+        if (!head->next) return NULL;
         
         // 双指针 p1 先动，等他们距离为 n p0 再动
         ListNode *p0 = head; // 第一根指向头
         ListNode *p1 = head; // 第二根指针，将被指向 p0 + n 处
 
-        ListNode *p0_pre; // 指向 p0 的上一个
+        // 不合并到下面，是怕要删除头结点
+        while (n > 0) {
+            p1 = p1->next;
+            n--;
+        }
 
-        int dis = 0; // 两个指针的距离
+        if (!p1) return head->next; // 删除头结点
 
-        while (p1 != NULL) // 直到 p1 为 NULL
-        {
-            if (dis >= n) {
-                // 当距离 大于 n 的时候，p0 才动
-                p0_pre = p0;
-                p0 = p0->next;
-            } else {
-                dis++;
-            }
-            // p1 一直在动（直到 为 NULL
+        while (p1->next) {  // 当 P1 移动到了最后，就停止
+            p0 = p0->next;
             p1 = p1->next;
         }
-
-        // 此时 p1 为 NULL，p0 在 p1 前面 n 个的地方
-
-        // cout << p0->next->val << endl;
-        // 要移除头
-        if (p0 == head) {
-            return p0->next;
-        }
-
-        p0_pre->next = p0->next;
+        
+        p0->next = p0->next->next;
         
         return head;
         
@@ -98,17 +81,17 @@ public:
 int main(int argc, char const *argv[])
 {
     ListNode head = ListNode(1);
-    // ListNode node0 = ListNode(2);
+    ListNode node0 = ListNode(2);
     // ListNode node1 = ListNode(3);
     // ListNode node2 = ListNode(4);
     // ListNode node3 = ListNode(5);
-    // head.next = &node0;
+    head.next = &node0;
     // node0.next = &node1;
     // node1.next = &node2;
     // node2.next = &node3;
 
     Solution *sol = new Solution();
-    ListNode *n = sol->removeNthFromEnd(&head, 1);
+    ListNode *n = sol->removeNthFromEnd(&head, 2);
 
     while (n) {
         cout << n->val << endl;
