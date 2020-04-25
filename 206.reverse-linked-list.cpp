@@ -53,28 +53,75 @@ struct ListNode {
 };
 
 /*
-    start. 
-        head 1 2 3 4 5
-        next null
+    头插法：
 
-    1. 
-        head 2 3 4 5
-        next 1
+        有 new 指向 NULL （最后返回）
+        有 head 指向第一个 （原链表）
+        有 tmp 指向 head 的下一个 （每次都会更新）
 
-    2.
-        head 3 4 5
-        next 2 1
+        目的：
+            将 new 变成： head -> new
+            然后 head 要变成原 head 的下一个 （因此要有 tmp 先存着原 head 的下一个）
 
-    3.
-        head 4 5
-        next 3 2 1
+        终止条件：
+            head = NULL
 
-    .......
+        比如： 1 - 2 - 3 - 4 - 5
 
-    tmp = head->next
-    head->next = new // 也是暂时的
-    new = head
-    head = tmp // head 复原
+            第一次：
+
+                new = NULL 
+                head = 1 - 2 - 3 - 4 - 5 - NULL
+
+                1. 让 tmp = 2 - 3 - 4 - 5 - NULL
+                2. 让 head 指向 new，变成 1 -> NULL
+                3. new 也变成 1 -> NULL
+                4. 让 head 变成 tmp, 即 head = 2 - 3 - 4 - 5 - NULL
+
+            第二次：
+
+                new = 1 -> NULL 
+                head = 2 - 3 - 4 - 5 - NULL
+
+                1. tmp = 3 - 4 - 5
+                2. head 指向 new： head = 2 - 1 - NULL
+                3. new 变成 head： new = 2 - 1 - NULL
+                4. head = tmp： head = 3 - 4 - 5 - NULL
+
+            第三次：
+
+                new = 2 - 1 - NULL
+                head = 3 - 4 - 5 - NULL
+
+                1. tmp = head->next (tmp = 4 - 5 - NULL)
+                2. head->next = new (head 3 - 2 - 1 - NULL)
+                3. new = head (new 3 - 2 - 1 - NULL)
+                4. head = tmp (head = 4 - 5 - NULL)
+
+            第四次：
+
+                new = 3 - 2 - 1 - NULL
+                head = 4 - 5 - NULL
+
+                1. tmp = head->next (tmp = 5 - NULL)
+                2. head->next = new (head = 4 - 3 - 2 - 1 - NULL)
+                3. new = head (new = 4 - 3 - 2 - 2 - 1 - NULL)
+                4. head = tmp (head = 5 - NULL)
+
+            第五次：
+
+                new = 4 - 3 - 2 - 2 - 1 - NULL
+                head = 5 - NULL
+
+                1. tmp = head->next (tmp = NULL)
+                2. head->next = new (head = 5 - 4 - 3 - 2 - 1 - NULL)
+                3. new = head (new = 5 - 4 - 3 - 2 - 1 - NULL)
+                4. head = NULL
+
+            终止：
+
+                得：new = 5 - 4 - 3 - 2 - 1 - NULL
+            
 */
 // @lc code=start
 class Solution {

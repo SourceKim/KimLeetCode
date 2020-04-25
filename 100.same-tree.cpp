@@ -56,28 +56,20 @@
  * 
  * 
  */
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
 
-// #include <vector>
-// #include <stdio.h>
-// #include <iostream>
-// #include <stack>
-// using namespace std;
+#include <vector>
+#include <stdio.h>
+#include <iostream>
+#include <stack>
+using namespace std;
 
-// struct TreeNode {
-//       int val;
-//       TreeNode *left;
-//       TreeNode *right;
-//       TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-// };
+struct TreeNode {
+      int val;
+      TreeNode *left;
+      TreeNode *right;
+      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+// @lc code=start
 class Solution {
 public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
@@ -139,4 +131,5 @@ public:
         
     }
 };
+// @lc code=end
 

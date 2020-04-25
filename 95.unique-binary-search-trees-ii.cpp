@@ -39,26 +39,20 @@
  * 
  * 
  */
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
-// #include <stdio.h>
-// #include <iostream>
-// #include <queue>
 
-// using namespace std;
-// struct TreeNode {
-//     int val;
-//     TreeNode *left;
-//     TreeNode *right;
-//     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-// };
+#include <vector>
+#include <stdio.h>
+#include <iostream>
+#include <stack>
+using namespace std;
+
+struct TreeNode {
+      int val;
+      TreeNode *left;
+      TreeNode *right;
+      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+// @lc code=start
 class Solution {
 public:
     vector<TreeNode*> generateTrees(int n) {
@@ -110,16 +104,17 @@ private:
         return vec;
     }
 };
+// @lc code=end
 
-// int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[]) {
 
-//     Solution *sol = new Solution();
-//     vector<TreeNode *> res = sol->generateTrees(3);
-//     for (int k=0; k<res.size(); k++) {
-//         cout << res[k]->val << endl;
-//     }
+    Solution *sol = new Solution();
+    vector<TreeNode *> res = sol->generateTrees(3);
+    for (int k=0; k<res.size(); k++) {
+        cout << res[k]->val << endl;
+    }
     
     
-//     return 0;
-// }
+    return 0;
+}
 

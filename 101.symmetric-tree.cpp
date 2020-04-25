@@ -44,26 +44,19 @@
  * Bonus points if you could solve it both recursively and iteratively.
  * 
  */
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
-// #include <stdio.h>
-// #include <iostream>
-// #include <queue>
+#include <vector>
+#include <stdio.h>
+#include <iostream>
+#include <queue>
+using namespace std;
 
-// using namespace std;
-// struct TreeNode {
-//     int val;
-//     TreeNode *left;
-//     TreeNode *right;
-//     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-// };
+struct TreeNode {
+      int val;
+      TreeNode *left;
+      TreeNode *right;
+      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+// @lc code=start
 class Solution {
 public:
     bool isSymmetric(TreeNode* root) {
@@ -106,6 +99,8 @@ public:
         return true;
     }
 };
+
+// @lc code=end
 
 // int main(int argc, char const *argv[])
 // {

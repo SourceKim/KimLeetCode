@@ -40,18 +40,19 @@
  * };
  */
 
-// #include <vector>
-// #include <stdio.h>
-// #include <iostream>
-// #include <stack>
-// using namespace std;
+#include <vector>
+#include <stdio.h>
+#include <iostream>
+#include <stack>
+using namespace std;
 
-// struct TreeNode {
-//       int val;
-//       TreeNode *left;
-//       TreeNode *right;
-//       TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-// };
+struct TreeNode {
+      int val;
+      TreeNode *left;
+      TreeNode *right;
+      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+// @lc code=start
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
@@ -64,7 +65,14 @@ public:
 
         while (!st.empty() || currentNode != NULL) { // 栈都空了 且 当前节点是 NULL
 
-            if (currentNode == NULL) { // 如果当前节点为 NULL
+            if (currentNode) { // 当前节点不为 NULL
+
+                st.push(currentNode); // 将当前节点先压入栈
+
+                currentNode = currentNode->left; // 再去找左节点 （直到为 NULL
+
+            } else { // 如果当前节点为 NULL
+
 
                 currentNode = st.top(); // 让当前节点等于栈顶的节点 （有可能是 左、中、右
                 st.pop(); // 出栈
@@ -75,11 +83,6 @@ public:
 
                 // 注意，这里的情况可能是 右边的子节点是 NULL，
 
-            } else { // 当前节点不为 NULL
-
-                st.push(currentNode); // 将当前节点先压入栈
-
-                currentNode = currentNode->left; // 再去找左节点 （直到为 NULL
             }
 
         }
@@ -87,4 +90,5 @@ public:
         return vec;
     }
 };
+// @lc code=end
 
