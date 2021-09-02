@@ -65,36 +65,22 @@ public:
         ListNode *dummy = new ListNode(-1);
         dummy->next = head;
 
-        /*
-        pre - 翻转的前一个节点
-        start - 翻转开始的节点
-        next - 开始的下一个节点
-        */
-        ListNode *pre, *start, *next;
-        pre = dummy;
+        ListNode *pre = dummy, *tmp = head, *cur;
 
-        // 1. 找到 pre start next
+        /* 让 pre 指向要交换的前一个 */
         for (int i = 0; i < m - 1; i++) {
             pre = pre->next;
-            start = pre->next;
-            next = start->next;
         }
 
-            pre->print("pre");
-            start->print("start");
-            next->print("next");
+        /* 让 cur 指向 pre 的下一个 */
+        cur = pre->next;
 
-        // 2. 
+        /* 开始交换，n - m 次 */
         for (int i = 0; i < n - m; i++) {
-            
-            start->next = next->next;
-            next->next = pre->next;
-            pre->next = next;
-            next = start->next;
-            
-            // pre->print("pre");
-            // start->print("start");
-            // next->print("next");
+            tmp = cur->next; // 1. 存起来 head 的下一个，等待赋值给 head
+            cur->next = tmp->next;
+            tmp->next = pre->next;
+            pre->next = tmp;
         }
 
         return dummy->next;
@@ -112,12 +98,13 @@ int main(int argc, char const *argv[])
 
     n0.next = &n1;
     n1.next = &n2;
-    // n2.next = &n3;
-    // n3.next = &n4;
+    n2.next = &n3;
+    n3.next = &n4;
 
 
 
     Solution *sol = new Solution();
-    ListNode *res = sol->reverseBetween(&n0, 1, 2);
+    ListNode *res = sol->reverseBetween(&n0, 2, 4);
+    res->print("res");
     return 0;
 }

@@ -43,6 +43,8 @@
  * 
  */
 
+#include "helper/helper.hpp"
+
 // @lc code=start
 /**
  * Definition for a binary tree node.
@@ -53,59 +55,44 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-#include <vector>
-#include <stdio.h>
-#include <iostream>
-#include <stack>
-#include <queue>
-using namespace std;
-
-struct TreeNode {
-      int val;
-      TreeNode *left;
-      TreeNode *right;
-      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
 class Solution {
 public:
     vector<vector<int>> pathSum(TreeNode* root, int sum) {
 
-        if (sum < 0) return {{}};
-
         vector<vector<int>> res;
 
-        int target = sum - root->val;
+        vector<int> tmpPath;
 
-        for (vector<int> left : pathSum(root->left, target)) {
+        dfs(root, res, tmpPath, sum);
 
-            int 
-        }
+        return res;
     }
 
 private:
-    void recursive(
+    void dfs(
     TreeNode *node, // 节点
     vector<vector<int>> &validPath, // 可用的 path
-    vector<int> lastPath, // 这条路径，上一次的保存值
-    int sum, 
-    int lastSum) {
+    vector<int> &lastPath, // 这条路径，上一次的保存值
+    int sum) {
 
-        if (node != NULL) { // 终止
+        if (!node) return;
 
-            lastPath.push_back(node->val); // 加入到 path
-            lastSum += sum; // 更新 sum
+        // 先保存一下当前这颗节点
+        lastPath.push_back(node->val);
 
-            // 递归左右
-            recursive(node->left, validPath, lastPath, sum, lastSum);
-            recursive(node->right, validPath, lastPath, sum, lastSum);
+        // 得到结果，有两个条件：
+        // 1. sum 正好相等
+        // 2. 是 leaf 节点
+        if (sum == node->val && !node->left && !node->right)  {
+            validPath.push_back(lastPath);
+        }
 
-            // 更新可用路径
-            if (node->left == NULL && node->right == NULL && lastSum == sum) {
+        // dfs
+        dfs(node->left, validPath, lastPath, sum - node->val);
+        dfs(node->right, validPath, lastPath, sum - node->val);
 
-                validPath.push_back(lastPath);
-                
-            }
-        } 
+        // 这颗节点玩完之后，要 pop 回去
+        lastPath.pop_back();
     }
 };
 // @lc code=end

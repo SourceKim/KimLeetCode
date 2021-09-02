@@ -56,11 +56,39 @@
  * 
  */
 
+#include <vector>
+
+using namespace std;
+
 // @lc code=start
+/* 
+    无需考虑跳着卖出最赚钱
+
+    只要后一个大于前一个即使利润了
+
+    比如 3 7 8 1 5
+
+    最大的是 (8 - 3) + (5 - 1)
+
+    也就相当于是： (7 - 3) + (8 - 7) + (5 - 1)
+
+    因此利润是会累加的
+ */
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         
+        int maxProfit = 0;
+
+        for (int i = 0; i < prices.size() - 1; i++) {
+            
+            int delta = prices[i + 1] - prices[i];
+            if (delta > 0) {
+                maxProfit += delta;
+            }
+        }
+
+        return maxProfit;
     }
 };
 // @lc code=end

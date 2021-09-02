@@ -44,6 +44,25 @@
 
 using namespace std;
 
+ /* 
+    记录一下 nlogn 的查找：
+
+    用二分：
+
+        设 ends 为最终递增数组
+
+        left & right 指向 ends 的头和尾
+        
+        如果没找到 （right 还在尾部），则在 ends 尾部加入这个值 （不覆盖） push_back
+        否则找到则在 right 的位置覆盖（替换）元素，这么做可以保证获取最长的可能性
+
+        对于没找到的情况如此理解：
+        对于 3 5 10，此时来了个 6 7，如果不替换，7 就不能入列
+        替换之后变成了 3 5 6，这样 7 就能入列了
+
+    牛皮
+  */
+
 // @lc code=start
 class Solution {
 public:
@@ -52,12 +71,20 @@ public:
         if (nums.empty()) return 0;
         
         vector<int> dp(nums.size(), 1);
+        /*
+            中途可能产生最长的值，
+            因为是要和以前位置的数逐个对比逐个去对比 
 
-        int longest = 1; // 中途可能产生最长的值，2020/04/13 这里没想到
+            对于 4 5 6 1 2 7 8
+            在位置 7 的时候，最长串应该是 dp[6] + 1 
 
-        for (int i = 1; i < nums.size(); i++) {
+        */
+        int longest = 1; 
+
+        // 使用 dp，和前面的值去对比，关键是要喝前面的对比
+        for (int i = 1; i < nums.size(); i++) { // 1 - len
             
-            for (int j = 0; j < i; j++) {
+            for (int j = 0; j < i; j++) { // 0 - i
 
                 if (nums[i] > nums[j]) {
                     dp[i] = max(dp[i], dp[j] + 1);
